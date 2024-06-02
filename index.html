@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guadalajaras Restaurant</title>
+    <link href="/imagenes/taco.ico" rel="icon"/>
+
+    <style>
+        @font-face {
+            font-family: 'TacosDeTijuana';
+            src: url('/multimedia/TacosTijuana.ttf') format('truetype');
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: rgba(215, 155, 62, 0.7);
+        }
+        header {
+            background-color: rgba(62, 45, 35, 0.4);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .logo-container img {
+            max-width: 45%;
+            height: auto;
+        }
+        .logo-mex {
+            width: 278px;
+            height: 270px;
+        }
+        nav {
+            background-color: #06971e50;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid #333;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        nav ul li {
+            position: relative;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: color 0.3s ease;
+        }
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #333;
+            visibility: hidden;
+            transform: scaleX(0);
+            transition: all 0.3s ease-in-out;
+        }
+        nav ul li a:hover::before {
+            visibility: visible;
+            transform: scaleX(1);
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 2px solid #333;
+        }
+        .carousel img {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+        }
+        
+        .about-us, .services, .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        .about-us h2, .services h2, .contact-form h2 {
+            text-align: center;
+            position: relative;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            font-family: 'TacosDeTijuana', Arial, sans-serif;
+        }
+        .services h3 {
+    font-family: 'Arial', sans-serif; 
+    font-size: 1.5rem; 
+    color: #333; 
+    text-align: center; 
+    margin: 1rem 0; 
+    position: relative; 
+    transition: color 0.3s ease, transform 0.3s ease; 
+}
+
+.services h3::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.5rem;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, #ff7e5f, #feb47b); 
+    transition: width 0.3s ease;
+}
+
+.services h3:hover::before {
+    width: 100%;
+}
+
+.services h3:hover {
+    color: #ff7e5f; 
+    transform: scale(1.05); 
+}
+        .about-us h2 span, .services h2 span, .contact-form h2 span {
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            background-color: rgba(215, 155, 62, 0.7);
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+        .about-us h2 span:hover, .services h2 span:hover, .contact-form h2 span:hover {
+            transform: scale(1.1);
+        }
+        .about-us p, .services p, .contact-form p {
+            text-align: justify;
+            margin: 1rem 0;
+        }
+        .about-us p, .services p {
+            font-family: 'Arial', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+            text-align: center;
+            padding: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+       .services p:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        
+        }
+        .about-us p:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .contact-form label {
+            display: block;
+            margin: 0.5rem 0;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            box-sizing: border-box;
+        }
+        .contact-form button {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .services-carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .services-carousel .service-card {
+            flex: 1 0 100%;
+            box-sizing: border-box;
+            padding: 1rem;
+            text-align: center;
+            display: none;
+        }
+        .services-carousel .service-card.active {
+            display: block;
+        }
+        .services-carousel img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .services-carousel-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .services-carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .audio-player {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem auto;
+        }
+        .audio-player button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .audio-player button:hover {
+            background-color: #555;
+        }
+        @media (max-width: 768px) {
+            .carousel-buttons button,
+            .services-carousel-buttons button,
+            .audio-player button {
+                padding: 0.5rem;
+            }
+            .about-us, .services, .contact-form {
+                width: 90%;
+                margin: 1rem auto;
+                padding: 0.5rem;
+            }
+            .logo-container img {
+                max-width: 70%;
+            }
+            .logo-mex {
+                width: 200px;
+                height: 194px;
+            }
+        }
+        @media (max-width: 480px) {
+            .carousel-buttons button,
+            .services-carousel-buttons button,
+            .audio-player button {
+                padding: 0.25rem;
+            }
+            .about-us h2, .services h2, .contact-form h2 {
+                font-size: 1.2rem;
+            }
+            .about-us p, .services p, .contact-form label, .contact-form input, .contact-form textarea {
+                font-size: 0.9rem;
+            }
+            .contact-form button {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            .logo-container img {
+                max-width: 90%;
+            }
+            .logo-mex {
+                width: 150px;
+                height: 135px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/imagenes/titulo.png" alt="Guadalajaras Restaurant">
+            <img src="/imagenes/logo-mex.png" alt="New Logo" class="logo-mex">
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about-us">Nuestra Historia</a></li>
+            <li><a href="#services">Nuestros Servicios</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="carousel">
+        <img src="/imagenes/taco-carrucel.png" alt="Tacos" class="active">
+        <img src="/imagenes/hotdog-carrucel.jpg" alt="Hot Dogs">
+        <img src="/imagenes/80890446_856870438105849_1154343482379206656_n.jpg" alt="Barbacoa">
+      
+        <div class="carousel-buttons">
+            <button onclick="prevSlide()">&#10094;</button>
+            <button onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
+
+    <section id="about-us" class="about-us">
+        <h2><span>NUESTRA HISTORIA</span></h2>
+        <p>Bienvenidos a nuestra Carreta de Comida, donde nos especializamos en ofrecer los mejores tacos, hot dogs y barbacoas para tus eventos sociales. Contamos con más de 30 años de experiencia en el Valle Imperial, 
+        nos enorgullecemos de brindar un servicio de calidad y sabores auténticos que harán que tus eventos sean inolvidables. Somos conocidos en Valle Imperial, condado de Brawley y alrededores.</p>
+        <center><img src="imagenes/historia.jpg" alt="Familia"></center>
+    </section>
+
+    <section id="services" class="services">
+        <h2><span>NUESTROS SERVICIOS</span></h2>
+        <div class="services-carousel">
+            <div class="service-card active">
+                <h3>Tacos Auténticos</h3>
+                <p>DISFRUTA DE NUESTROS TACOS AUTÉNTICOS CON UNA VARIEDAD DE CARNES Y SALSAS QUE HARÁN QUE TUS EVENTOS SEAN INOLVIDABLES.</p>
+                <img src="/imagenes/servicio-tacos.jpg" alt="Tacos">
+            </div>
+            <div class="service-card">
+                <h3>Hot Dogs Deliciosos</h3>
+                <p>HOT DOGS DELICIOSOS, PERFECTOS PARA CUALQUIER EVENTO. PERSONALÍZALOS CON UNA VARIEDAD DE INGREDIENTES FRESCOS.</p>
+                <img src="/imagenes/Servicio-HotDogs.jpg" alt="Hot Dogs">
+            </div>
+            <div class="service-card">
+                <h3>Barbacoas Suculentas</h3>
+                <p>BARBACOAS SUCULENTAS QUE HARÁN QUE TUS INVITADOS PIDAN MÁS. PREPARADAS CON LOS MEJORES INGREDIENTES Y TÉCNICAS TRADICIONALES.</p>
+                <img src="/imagenes/Servicio-barbacoa.jpg" alt="Barbacoa">
+            </div>
+        </div>
+        <div class="services-carousel-buttons">
+            <button onclick="prevService()">&#10094;</button>
+            <button onclick="nextService()">&#10095;</button>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-form">
+        <h2><span>CONTACT US</span></h2>
+        <form action="https://formspree.io/f/mjvnqwvr" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" >
+
+            <label for="telefono">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required>
+            
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            
+            <button type="submit">SEND</button>
+        </form>
+    </section>
+
+    <div class="audio-player">
+        <audio id="audio" src="/multimedia/MusicaProyecto.mp4" preload="auto" autoplay></audio>
+        <button onclick="togglePlay()">Pause</button>
+    </div>
+    <script src="script.js">
+
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Guadalajaras Restaurant. Contact With Tony: (760)909-9823.</p>
+    </footer>
+
+  
+</body>
+</html>
